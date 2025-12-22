@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "300035165281",
+    "project_id": "yatra-c40f5",
+    "storage_bucket": "yatra-c40f5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:300035165281:android:47671a16421f324689ae20",
+        "android_client_info": {
+          "package_name": "com.yatra.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC82zKrcMTW-Smzut10gPRHUBpa-H4HIfs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
