@@ -14,13 +14,13 @@ class CustomTextformfield extends StatelessWidget {
     this.maxLines,
     this.initialValue,
     this.borderRadius,
-    this.contentPadding
+    this.contentPadding,
   });
   String? labelText, hintText;
   TextInputType? keyboardType;
   String? Function(String?)? validator;
   Function(String)? onChanged;
-  TextStyle? labelStyle; 
+  TextStyle? labelStyle;
   Widget? suffixIcon;
   bool? obscureText;
   int? maxLines = 1;
@@ -44,7 +44,9 @@ class CustomTextformfield extends StatelessWidget {
         labelText: labelText,
         hintText: hintText,
         suffixIcon: suffixIcon,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(borderRadius ?? 12)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(borderRadius ?? 12),
+        ),
       ),
     );
   }

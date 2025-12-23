@@ -1,10 +1,10 @@
 class AppUser {
+  String? uid;
   String? firstName;
   String? lastName;
   Phone? phone;
   String? address;
   String? email;
-  String? password;
   DocumentType? documentType;
   Documents? photo;
 
@@ -14,41 +14,40 @@ class AppUser {
     this.phone,
     this.address,
     this.email,
-    this.password,
     this.documentType,
     this.photo,
+    this.uid,
   });
 
   AppUser.fromJson(Map<String, dynamic> json) {
+    uid = json['uid'];
     firstName = json['firstName'];
     lastName = json['lastName'];
-    phone = json['phone'] != null ? new Phone.fromJson(json['phone']) : null;
+    phone = json['phone'] != null ? Phone.fromJson(json['phone']) : null;
     address = json['address'];
     email = json['email'];
-    password = json['password'];
     documentType = json['documentType'] != null
-        ? new DocumentType.fromJson(json['documentType'])
+        ? DocumentType.fromJson(json['documentType'])
         : null;
-    photo = json['photo'] != null
-        ? new Documents.fromJson(json['photo'])
-        : null;
+    photo = json['photo'] != null ? Documents.fromJson(json['photo']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
-    if (this.phone != null) {
-      data['phone'] = this.phone!.toJson();
+    final data = <String, dynamic>{};
+    data['uid'] = uid;
+    data['firstName'] = firstName;
+    data['lastName'] = lastName;
+    if (phone != null) {
+      data['phone'] = phone!.toJson();
     }
-    data['address'] = this.address;
-    data['email'] = this.email;
-    
-    if (this.documentType != null) {
-      data['documentType'] = this.documentType!.toJson();
+    data['address'] = address;
+    data['email'] = email;
+
+    if (documentType != null) {
+      data['documentType'] = documentType!.toJson();
     }
-    if (this.photo != null) {
-      data['photo'] = this.photo!.toJson();
+    if (photo != null) {
+      data['photo'] = photo!.toJson();
     }
     return data;
   }
@@ -66,9 +65,9 @@ class Phone {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['countryCode'] = this.countryCode;
-    data['number'] = this.number;
+    final data = <String, dynamic>{};
+    data['countryCode'] = countryCode;
+    data['number'] = number;
     return data;
   }
 }
@@ -84,16 +83,16 @@ class DocumentType {
     if (json['documents'] != null) {
       documents = <Documents>[];
       json['documents'].forEach((v) {
-        documents!.add(new Documents.fromJson(v));
+        documents!.add(Documents.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type'] = this.type;
-    if (this.documents != null) {
-      data['documents'] = this.documents!.map((v) => v.toJson()).toList();
+    final data = <String, dynamic>{};
+    data['type'] = type;
+    if (documents != null) {
+      data['documents'] = documents!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -113,10 +112,10 @@ class Documents {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['fileName'] = this.fileName;
-    data['fileType'] = this.fileType;
-    data['file'] = this.file;
+    final data = <String, dynamic>{};
+    data['fileName'] = fileName;
+    data['fileType'] = fileType;
+    data['file'] = file;
     return data;
   }
 }

@@ -24,7 +24,7 @@ abstract class PasswordState {
 }
 
 class PasswordInitialState extends PasswordState {
-  const PasswordInitialState() : super(false); 
+  const PasswordInitialState() : super(false);
 }
 
 class PasswordUpdatedState extends PasswordState {

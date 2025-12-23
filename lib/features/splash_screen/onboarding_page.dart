@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:yatra/core/constants/app_color.dart';
 import 'package:yatra/core/constants/app_string.dart';
-import 'package:yatra/features/auth/pages/login_page.dart';
+import 'package:yatra/core/utils/route_generator.dart';
+import 'package:yatra/core/utils/routes.dart';
 import 'package:yatra/features/splash_screen/onboard_screen.dart';
 import 'package:yatra/features/widgets/custom_button.dart';
 
@@ -64,9 +65,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   width: currentIndex == index ? 18 : 8,
                   height: 8,
                   decoration: BoxDecoration(
-                    color: currentIndex == index
-                        ? primaryColor
-                        : Colors.grey,
+                    color: currentIndex == index ? primaryColor : Colors.grey,
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
@@ -81,9 +80,9 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 borderRadius: 8,
                 onPressed: () {
                   if (currentIndex == 2) {
-                    Navigator.push(
+                    RouteGenerator.navigateToPageWithoutStack(
                       context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
+                      Routes.loginRoute,
                     );
                   } else {
                     _controller.nextPage(

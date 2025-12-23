@@ -1,12 +1,49 @@
-abstract class AddPlaceState {}
+import '../model/add_places.dart';
 
-class AddPlaceInitialState extends AddPlaceState {}
+// ADD PLACE STATES
+abstract class AddPlacesState {}
 
-class AddPlaceLoadingState extends AddPlaceState {}
+class AddPlacesInitialState extends AddPlacesState {}
 
-class AddPlaceLoadedState extends AddPlaceState {}
+class AddPlacesLoadingState extends AddPlacesState {}
 
-class AddPlaceErrorState extends AddPlaceState {
+class AddPlacesLoadedState extends AddPlacesState {}
+
+class AddPlacesErrorState extends AddPlacesState {
   final String message;
-  AddPlaceErrorState(this.message);
+  AddPlacesErrorState(this.message);
+}
+
+// GET PLACES STATES
+abstract class GetPlacesState {}
+
+class GetPlacesInitialState extends GetPlacesState {}
+
+class GetPlacesLoadingState extends GetPlacesState {}
+
+class GetPlacesLoadedState extends GetPlacesState {
+  final List<AddPlace> places;
+  GetPlacesLoadedState(this.places);
+}
+
+class GetPlacesErrorState extends GetPlacesState {
+  final String message;
+  GetPlacesErrorState(this.message);
+}
+
+// DELETE PLACE STATES
+abstract class DeletePlaceState {}
+
+class DeletePlaceInitialState extends DeletePlaceState {}
+
+class DeletePlaceLoadingState extends DeletePlaceState {}
+
+class DeletePlaceSuccessState extends DeletePlaceState {
+  final String placeId;
+  DeletePlaceSuccessState(this.placeId);
+}
+
+class DeletePlaceErrorState extends DeletePlaceState {
+  final String error;
+  DeletePlaceErrorState(this.error);
 }

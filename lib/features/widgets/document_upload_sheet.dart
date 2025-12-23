@@ -21,7 +21,7 @@ class DocumentUploadBottomSheet extends StatelessWidget {
 
   final VoidCallback onUpload;
 
-   DocumentUploadBottomSheet({
+  DocumentUploadBottomSheet({
     super.key,
     required this.documentType,
     this.frontImage,
@@ -60,7 +60,7 @@ class DocumentUploadBottomSheet extends StatelessWidget {
               ),
             ),
           ),
-           SizedBox(height: 20),
+          SizedBox(height: 20),
 
           if (isCitizenship) ...[
             RemovableUploadBox(
@@ -84,7 +84,7 @@ class DocumentUploadBottomSheet extends StatelessWidget {
               onRemove: onRemoveSingle,
             ),
 
-         SizedBox(height: 25),
+          SizedBox(height: 25),
 
           SizedBox(
             width: double.infinity,
@@ -97,11 +97,8 @@ class DocumentUploadBottomSheet extends StatelessWidget {
                       onUpload();
                     }
                   : null,
-              child:  Text(
-                uploadLabel,
-                style: TextStyle(color: Colors.white),
-              ),
-            )
+              child: Text(uploadLabel, style: TextStyle(color: Colors.white)),
+            ),
           ),
         ],
       ),

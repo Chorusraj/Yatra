@@ -22,7 +22,7 @@ class RemovableUploadBox extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label,style:  TextStyle(fontWeight: FontWeight.w500),),
+        Text(label, style: TextStyle(fontWeight: FontWeight.w500)),
         SizedBox(height: 6),
         Stack(
           children: [

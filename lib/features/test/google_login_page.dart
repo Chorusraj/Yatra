@@ -42,7 +42,13 @@ Future<void> signInWithGoogle(BuildContext context) async {
       print("Phone number (if available): ${user.phoneNumber}");
 
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => LogoutPage(name: user.displayName,email: user.email,imagePath: user.photoURL,)),
+        MaterialPageRoute(
+          builder: (context) => LogoutPage(
+            name: user.displayName,
+            email: user.email,
+            imagePath: user.photoURL,
+          ),
+        ),
         (Route<dynamic> route) => false,
       );
     }
@@ -77,4 +83,3 @@ class _GoogleLoginPageState extends State<GoogleLoginPage> {
     );
   }
 }
-

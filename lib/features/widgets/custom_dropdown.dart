@@ -9,7 +9,7 @@ class CustomDropdown extends StatelessWidget {
     this.validator,
     this.hintText,
     this.initialValue,
-    this.borderRadius
+    this.borderRadius,
   });
   Function(dynamic)? onChanged;
   List<String>? items;
@@ -28,7 +28,9 @@ class CustomDropdown extends StatelessWidget {
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(borderRadius ?? 12)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(borderRadius ?? 12),
+        ),
       ),
       items: items
           ?.map((item) => DropdownMenuItem(child: Text(item), value: item))

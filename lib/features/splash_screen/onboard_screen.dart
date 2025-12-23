@@ -3,9 +3,15 @@ import 'package:yatra/core/constants/app_color.dart';
 
 class OnboardScreen extends StatelessWidget {
   final String image;
-  final String title,highLightWord,subtitle;
+  final String title, highLightWord, subtitle;
 
-  const OnboardScreen({super.key, required this.image, required this.title ,required this.highLightWord ,required this.subtitle});
+  const OnboardScreen({
+    super.key,
+    required this.image,
+    required this.title,
+    required this.highLightWord,
+    required this.subtitle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +52,7 @@ class OnboardScreen extends StatelessWidget {
             textAlign: TextAlign.center,
             text: TextSpan(
               style: TextStyle(color: Colors.grey, height: 1.4, fontSize: 14),
-              children: [
-                TextSpan(text: subtitle),
-              ],
+              children: [TextSpan(text: subtitle)],
             ),
           ),
         ),

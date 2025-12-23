@@ -1,13 +1,18 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yatra/core/constants/app_color.dart';
 import 'package:yatra/core/constants/app_string.dart';
+import 'package:yatra/core/services/cloudinary_service.dart';
 import 'package:yatra/core/services/image_picker_service.dart';
+import 'package:yatra/core/utils/helper.dart';
+import 'package:yatra/core/utils/route_generator.dart';
+import 'package:yatra/core/utils/routes.dart';
 import 'package:yatra/core/validators/document_validator.dart';
-import 'package:yatra/features/auth/model/user.dart' ;
-import 'package:yatra/features/auth/pages/signup_page.dart';
+import 'package:yatra/features/auth/bloc/auth_bloc.dart';
+import 'package:yatra/features/auth/bloc/auth_state.dart';
+import 'package:yatra/features/auth/model/user.dart';
 import 'package:yatra/features/widgets/custom_button.dart';
 import 'package:yatra/features/widgets/custom_dropdown.dart';
 import 'package:yatra/features/widgets/document_upload_sheet.dart';
@@ -29,6 +34,7 @@ class _SignupPage1State extends State<SignupPage1> {
   final List<String> documentType = ["Citizenship", "National Id", "Passport"];
 
   final ImagePickerService _imageService = ImagePickerService();
+  final CloudinaryService _cloudinary = CloudinaryService();
 
   String? selectedDoc;
 
@@ -44,92 +50,107 @@ class _SignupPage1State extends State<SignupPage1> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              InkWell(
-                onTap: () => Navigator.pop(context, SignupPage()),
-                child: Icon(Icons.arrow_back_ios),
-              ),
-
-              SizedBox(height: 15),
-              Text(
-                createAccountLabel,
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 5),
-              Text(
-                signupSubtitleLabel,
-                style: TextStyle(color: Colors.black54, fontSize: 13),
-              ),
-
-              SizedBox(height: 40),
-
-              /// PROFILE PHOTO
-              Text(
-                profilePhotoUploadLabel,
-                style: TextStyle(fontWeight: FontWeight.w500),
-              ),
-              SizedBox(height: 3),
-              ProfilePhotoPicker(
-                imageFile: profileImage,
-                onPick: () => _showSourcePicker(isProfile: true),
-                onRemove: () => setState(() => profileImage = null),
-              ),
-              FormErrorText(error: photoError),
-
-              SizedBox(height: 22),
-
-              /// DOCUMENT TYPE
-              Text(
-                documentTypeLabel,
-                style: TextStyle(fontWeight: FontWeight.w500),
-              ),
-              SizedBox(height: 3),
-              CustomDropdown(
-                hintText: dropDownHintLabel,
-                items: documentType,
-                onChanged: (value) {
-                  setState(() {
-                    selectedDoc = value;
-                    frontImage = null;
-                    backImage = null;
-                    singleDocImage = null;
-                    docError = null;
-                  });
-                },
-              ),
-
-              SizedBox(height: 22),
-
-              /// DOCUMENT UPLOAD
-              UploadBox(
-                label: documentUploadLabel,
-                imageFile: selectedDoc == "Citizenship" ? null : singleDocImage,
-                onTap: selectedDoc == null ? null : _showDocumentBottomSheet,
-              ),
-              FormErrorText(error: docError),
-
-              SizedBox(height: 65),
-
-              /// SUBMIT
-              SizedBox(
-                width: double.infinity,
-                child: CustomButton(
-                  backgroundColor: primaryColor,
-                  borderRadius: 8,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  onPressed: _validateAndSubmit,
-                  child: Text(
-                    signupLabel,
-                    style: TextStyle(fontSize: 16, color: secondaryColor),
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      RouteGenerator.navigateToPage(
+                        context,
+                        Routes.signupPageRoute,
+                      );
+                    },
+                    child: Icon(Icons.arrow_back_ios),
                   ),
-                ),
+
+                  SizedBox(height: 15),
+                  Text(
+                    createAccountLabel,
+                    style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    signupSubtitleLabel,
+                    style: TextStyle(color: Colors.black54, fontSize: 13),
+                  ),
+
+                  SizedBox(height: 40),
+
+                  /// PROFILE PHOTO
+                  Text(
+                    profilePhotoUploadLabel,
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 3),
+                  ProfilePhotoPicker(
+                    imageFile: profileImage,
+                    onPick: () => _showSourcePicker(isProfile: true),
+                    onRemove: () => setState(() => profileImage = null),
+                  ),
+                  FormErrorText(error: photoError),
+
+                  SizedBox(height: 22),
+
+                  /// DOCUMENT TYPE
+                  Text(
+                    documentTypeLabel,
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 3),
+                  CustomDropdown(
+                    hintText: dropDownHintLabel,
+                    items: documentType,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedDoc = value;
+                        frontImage = null;
+                        backImage = null;
+                        singleDocImage = null;
+                        docError = null;
+                      });
+                    },
+                  ),
+
+                  SizedBox(height: 22),
+
+                  /// DOCUMENT UPLOAD
+                  UploadBox(
+                    label: documentUploadLabel,
+                    imageFile: selectedDoc == "Citizenship"
+                        ? null
+                        : singleDocImage,
+                    onTap: selectedDoc == null
+                        ? null
+                        : _showDocumentBottomSheet,
+                  ),
+                  FormErrorText(error: docError),
+
+                  SizedBox(height: 65),
+
+                  /// SUBMIT
+                  SizedBox(
+                    width: double.infinity,
+                    child: CustomButton(
+                      backgroundColor: primaryColor,
+                      borderRadius: 8,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      onPressed: _validateAndSubmit,
+                      child: Text(
+                        signupLabel,
+                        style: TextStyle(fontSize: 16, color: secondaryColor),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            if (context.watch<AuthBloc>().state is AuthLoadingState)
+              backdropFilter(context),
+          ],
         ),
       ),
     );
@@ -225,24 +246,29 @@ class _SignupPage1State extends State<SignupPage1> {
       final documents = <Documents>[];
 
       if (selectedDoc == "Citizenship") {
+        final frontUpload = await _cloudinary.uploadImage(frontImage!);
+        final backUpload = await _cloudinary.uploadImage(backImage!);
+
         documents.addAll([
           Documents(
             fileName: "citizenship_front",
             fileType: "image",
-            file: frontImage!.path,
+            file: frontUpload['secure_url'],
           ),
           Documents(
             fileName: "citizenship_back",
             fileType: "image",
-            file: backImage!.path,
+            file: backUpload['secure_url'],
           ),
         ]);
       } else {
+        final singleUpload = await _cloudinary.uploadImage(singleDocImage!);
+
         documents.add(
           Documents(
             fileName: selectedDoc,
             fileType: "image",
-            file: singleDocImage!.path,
+            file: singleUpload['secure_url'],
           ),
         );
       }
@@ -252,17 +278,22 @@ class _SignupPage1State extends State<SignupPage1> {
         documents: documents,
       );
 
+      final profileUpload = await _cloudinary.uploadImage(profileImage!);
+
       widget.user.photo = Documents(
         fileName: "profile_photo",
         fileType: "image",
-        file: profileImage!.path,
+        file: profileUpload['secure_url'],
       );
 
       await FirebaseFirestore.instance
           .collection('users')
-          .add(widget.user.toJson());
+          .doc(widget.user.uid)
+          .update(widget.user.toJson());
 
       debugPrint("User saved successfully");
+
+      RouteGenerator.navigateToPageWithoutStack(context, Routes.homeRoute);
     }
   }
 }

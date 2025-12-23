@@ -9,6 +9,7 @@ import 'package:yatra/core/utils/route_generator.dart';
 import 'package:yatra/core/utils/routes.dart';
 import 'package:yatra/features/add_place/bloc/add_place_bloc.dart';
 import 'package:yatra/features/add_place/pages/add_places.dart';
+import 'package:yatra/features/add_place/pages/places_list_screen.dart';
 import 'package:yatra/features/auth/bloc/auth_bloc.dart';
 import 'package:yatra/features/auth/pages/login_page.dart';
 import 'package:yatra/features/auth/pages/signup_page.dart';
@@ -144,6 +145,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
         BlocProvider<PasswordBloc>(create: (context) => PasswordBloc()),
         BlocProvider<AddPlacesBloc>(create: (context) => AddPlacesBloc()),
+        BlocProvider<GetPlacesBloc>(create: (context) => GetPlacesBloc()),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
@@ -153,7 +155,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         ),
-        home: AddPlacesScreen(),
+        home: SplashScreen(),
       ),
     );
   }
