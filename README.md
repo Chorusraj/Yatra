@@ -94,17 +94,17 @@ flutter run
 
 ## 📸 Screenshots
 
-### Product List
-![Product List](assets/screenshots/product_list.png)
+### Login Screen
+![Login Screen](assets/screenshots/login_screen.png)
 
-### Product Details
-![Product Details](assets/screenshots/product_details.png)
+### Signup Screen
+![Signup Screen](assets/screenshots/signup_screen.png)
 
-### Cart Page
-![Cart Page](assets/screenshots/cart_page.png)
+### Signup Screen 2
+![Signup Screen 2](assets/screenshots/signup_screen2.png)
 
-### Cart Empty Page
-![Cart Empty Page](assets/screenshots/cart_empty_page.png)
+### Onboarding Screen
+![Onboarding Screen](assets/screenshots/onboarding_screen.png)
 
 > Make sure your screenshots are placed in the `screenshots/` folder at the repo root.
 
